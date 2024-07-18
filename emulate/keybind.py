@@ -1,16 +1,16 @@
 import pygame
 
-from props.button_prop import Direction
+from .props.button_prop import Direction
 
 
 # choose "common name" keybind from: http://cs.roanoke.edu/Fall2013/CPSC120A/pygame-1.9.1-docs-html/ref/key.html
 class Keybind:
-    UP = None
-    DOWN = None
-    LEFT = None
-    RIGHT = None
-    ALPHA = None
-    BETA = None
+    UP = -1
+    DOWN = -1
+    LEFT = -1
+    RIGHT = -1
+    ALPHA = -1
+    BETA = -1
 
     def read_from_config(self):
         with open("./emulate/keybind.config") as f:
@@ -36,7 +36,7 @@ class Keybind:
                         raise Exception("Parse error when reading keybind.config")
 
     @staticmethod
-    def keybind_to_direction(key: str) -> Direction | None:
+    def keybind_to_direction(key: int | None) -> Direction | None:
         match key:
             case Keybind.LEFT:
                 return Direction.LEFT
@@ -50,7 +50,7 @@ class Keybind:
                 return None
 
     @staticmethod
-    def keybind_to_selection(key: str) -> str | None:
+    def keybind_to_selection(key: int | None) -> str | None:
         match key:
             case Keybind.ALPHA:
                 return "ALPHA"

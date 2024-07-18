@@ -4,7 +4,7 @@ import pygame
 
 class PygameDriver:
     framerate = 30
-    display_scale = 2
+    display_scale = 3
     display: pygame.Surface
 
     def init_driver(self, display_width: int, display_height: int):

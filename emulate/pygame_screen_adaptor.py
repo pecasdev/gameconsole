@@ -1,4 +1,4 @@
-from pygame_driver import PygameDriver
+from .pygame_driver import PygameDriver
 from screen_adaptor.screen_adaptor import ScreenAdaptor
 import pygame
 
