@@ -8,19 +8,28 @@ from .light_state import LightState
 
 
 class Light(Object):
+    state: LightState
+
     def __init__(self, x: int, y: int):
         super().__init__(x, y)
         self.state = LightState()
+
+    def prestep(self, screen: Screen):
+        if HardwareState.ALPHA.just_pressed():
+            self.state.handle_alpha_press()
+
+            if self.state.ready_to_capture_end:
+                self.state.reaction_stamp_end = now()
+                self.state.ready_to_capture_end = False
 
     def step(self, screen: Screen):
         font_small.set_screen(screen)
 
         self.state.handle_deadline()
 
-        if HardwareState.ALPHA.just_pressed():
-            self.state.handle_alpha_press()
-
+        self.state.calculate_reaction_time()
         reaction_duration = self.state.reaction_duration
+
         if reaction_duration is not None:
             if reaction_duration == -1:
                 font_small.draw_string(self.x, self.y + 20, "too soon")
@@ -28,3 +37,8 @@ class Light(Object):
                 font_small.draw_string(self.x, self.y + 20, f"{reaction_duration} ms")
 
         font_small.draw_string(self.x, self.y, self.state.state)
+
+    def poststep(self, screen: Screen):
+        if self.state.ready_to_capture_start:
+            self.state.reaction_stamp_start = now()
+            self.state.ready_to_capture_start = False

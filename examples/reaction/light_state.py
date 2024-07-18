@@ -3,6 +3,9 @@ from random import randrange
 
 
 class LightState:
+    reaction_stamp_end: int | None
+    reaction_stamp_start: int | None
+
     def __init__(self) -> None:
         self.state = "idle"
 
@@ -11,15 +14,23 @@ class LightState:
         self.deadline_go_green = None
         self.reaction_duration = None
 
+        self.ready_to_capture_start = False
+        self.ready_to_capture_end = False
+
     def go_green(self):
         self.state = "green"
-        self.reaction_stamp_start = now()
+        self.ready_to_capture_start = True
+        self.ready_to_capture_end = True
 
     def go_red(self):
         self.deadline_go_green = now() + randrange(1000, 2500)
         self.state = "red"
+        self.ready_to_capture_end = False
 
     def go_idle(self):
+        self.state = "idle"
+
+    def calculate_reaction_time(self):
         if (
             self.reaction_stamp_end is not None
             and self.reaction_stamp_start is not None
@@ -29,8 +40,6 @@ class LightState:
 
             self.reaction_stamp_start = None
             self.reaction_stamp_end = None
-        
-        self.state = "idle"
 
     def handle_deadline(self):
         if (
@@ -40,16 +49,14 @@ class LightState:
         ):
             self.go_green()
             self.deadline_go_green = None
-    
+
     def handle_alpha_press(self):
         if self.state == "idle":
             return self.go_red()
 
         if self.state == "green":
-            self.reaction_stamp_end = now()
             return self.go_idle()
 
         if self.state == "red":
             self.reaction_duration = -1
             return self.go_idle()
-        
