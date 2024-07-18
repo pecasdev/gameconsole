@@ -13,11 +13,9 @@ from typing import Callable
 class Emulator:
     def __init__(
         self,
-        engine: Engine,
         engine_psa: PygameScreenAdaptor,
         pygame_driver: PygameDriver,
     ):
-        self.engine = engine
         self.engine_psa = engine_psa
         self.pygame_driver = pygame_driver
 

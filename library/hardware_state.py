@@ -1,27 +1,26 @@
 class ButtonState:
 
     def __init__(self, is_pressed: bool):
-        self.just_happened = True
+        self.__just_happened = True
         self.is_pressed = is_pressed
 
     def ack_just(self):
-        self.just_happened = False
+        self.__just_happened = False
 
     def just_pressed(self):
-        return self.just_happened and self.is_pressed
+        return self.__just_happened and self.is_pressed
 
     def just_released(self):
-        return self.just_happened and not self.is_pressed
+        return self.__just_happened and not self.is_pressed
 
     def __str__(self):
-        exclaim = "!" if self.just_happened else ""
+        exclaim = "!" if self.__just_happened else ""
         return exclaim + "_" if self.is_pressed else "^" + exclaim
 
     def update(self, other):
         if self.is_pressed != other.is_pressed:
-            print("updating", self, "to", other)
             self.is_pressed = other.is_pressed
-            self.just_happened = other.just_happened
+            self.__just_happened = other.__just_happened
 
     def __repr__(self):
         return str(self)
@@ -78,7 +77,6 @@ class HardwareState:
 
     @staticmethod
     def ack_button_states():
-        print("acknowledged button states")
         HardwareState.LEFT.ack_just()
         HardwareState.RIGHT.ack_just()
         HardwareState.UP.ack_just()
