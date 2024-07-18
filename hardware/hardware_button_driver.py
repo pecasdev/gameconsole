@@ -2,6 +2,7 @@
 
 from machine import Pin
 import time
+from engine import now
 
 
 class HardwareButtonPin:
@@ -16,20 +17,19 @@ class HardwareButtonPin:
     BETA = Pin(17, Pin.IN, Pin.PULL_DOWN)
 
 
-DEBOUNCE_POLL_REPEAT = 1
+DEBOUNCE_POLL_COUNT = 1
 DEBOUNCE_POLL_WAIT_MS = 5
 
 
-def create_debounce_generator(pin: HardwareButtonPin, DEBUG_name: str):
+def create_debounce_generator(pin: HardwareButtonPin):
     previous_value = False
 
     def generator():
         nonlocal previous_value
 
-        DEBUG_prev_line = ""
         while True:
             values = []
-            for i in range(DEBOUNCE_POLL_REPEAT):
+            for i in range(DEBOUNCE_POLL_COUNT):
                 if i != 0:
                     time.sleep(DEBOUNCE_POLL_WAIT_MS / 1000)
                 values.append(pin.value())
@@ -39,11 +39,6 @@ def create_debounce_generator(pin: HardwareButtonPin, DEBUG_name: str):
                 if True not in values
                 else (True if False not in values else previous_value)
             )
-
-            DEBUG_line = f"{DEBUG_name}: {previous_value} {new_value} {str(values)}"
-            if DEBUG_prev_line != DEBUG_line:
-                print(DEBUG_line)
-                DEBUG_prev_line = DEBUG_line
 
             yield new_value
             previous_value = new_value
