@@ -17,10 +17,6 @@ class Screen:
     def draw_pixel(self, x: int, y: int):
         self.adaptor.draw_pixel(x, y)
 
-    def draw_text(self, x: int, y:int, text: str):
-        raise NotImplementedError
-        # todo - implement text rendering library
-    
     def draw_rect(self, left: int, top: int, width: int, height: int):
         for w in range(width):
             for h in range(height):
