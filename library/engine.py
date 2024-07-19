@@ -1,5 +1,5 @@
 from hardware_state import ButtonState, HardwareState
-from screen import Screen
+import screen
 import time
 
 
@@ -40,14 +40,19 @@ class Engine:
         Engine.tick_cap = tick_cap
 
     @staticmethod
-    def set_screen(screen: Screen):
+    def set_screen(screen):
         Engine.screen = screen
+
+    @staticmethod
+    def reset():
+        Engine.objects = []
+        Engine.tick_cap = 100
 
     @staticmethod
     def create_object(obj: Object):
         Engine.objects.append(obj)
         obj.create()
-    
+
     @staticmethod
     def remove_object(obj: Object):
         Engine.objects.remove(obj)

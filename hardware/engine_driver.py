@@ -57,3 +57,6 @@ class EngineDriver:
 
             except KeyboardInterrupt:
                 self.running = False
+        
+        if not self.running:
+            Engine.reset()
