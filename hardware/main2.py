@@ -13,6 +13,7 @@ from engine import Engine
 from mount_sd import mount_sd
 from inject_select_menu import block_and_return_inject_selection
 from copy_injection_from_sd import copy_injection_from_sd
+from font import Font
 
 # todo - sd card stuff
 
@@ -23,13 +24,19 @@ Engine.set_screen(screen)
 
 mount_sd(screen)
 
+# import default fonts
+Font.import_font("library/font/default_fonts/small.font")
+
+
 inject_selection = block_and_return_inject_selection()
 print("selected injection:", inject_selection)
 copy_injection_from_sd(inject_selection)
 
+# run injection setup
 from inject import main
 
 main()
 
+# run engine
 engine_driver = EngineDriver()
 engine_driver.runloop()

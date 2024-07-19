@@ -1,34 +1,33 @@
 import json
 import font
-
-
-def character_dimensions_from_filename(filename: str) -> tuple[int, int]:
-    # possibly sus we are using the filename to store information
-    start = filename.rfind("_") + 1
-    end = filename.find(".png")
-    dimensions = [int(num) for num in filename[start:end].split("x")]
-    return (dimensions[0], dimensions[1])
+from sprite import Sprite
 
 
 def load(filename: str):
     with open(filename) as f:
         from_dump = json.load(f)
 
-    return font.Font(
-        from_dump["name"],
-        from_dump["char_w"],
-        from_dump["char_h"],
-        from_dump["charmap"],
-    )
+    char_w = from_dump["char_w"]
+    char_h = from_dump["char_h"]
+
+    character_sprites = {
+        k: Sprite(char_w, char_h, v) for k, v in from_dump["character_bitmaps"].items()
+    }
+
+    return font.Font(from_dump["name"], character_sprites)
 
 
 def dump(font, dirname: str):
+    without_width_and_height = {
+        k: v.to_dict()["bitmap"] for k, v in font.character_sprites.items()
+    }
+
     to_dump = {
         "name": font.name,
         "char_w": font.char_w,
         "char_h": font.char_h,
-        "charmap": font.charmap,
+        "character_bitmaps": without_width_and_height,
     }
 
-    with open(f"{dirname}/dump_{font.char_w}x{font.char_h}.font", "w") as f:
+    with open(f"{dirname}/{font.name}.font", "w") as f:
         json.dump(to_dump, f)

@@ -1,5 +1,6 @@
 from engine import Engine
 import font.persist as font_persist
+from sprite import Sprite
 
 
 class Font:
@@ -14,7 +15,11 @@ class Font:
 
     @staticmethod
     def set_current_font(name: str):
-        current_font = next(filter(lambda f: f.name == name, Font.known_fonts))
+        try:
+            current_font = next(filter(lambda f: f.name == name, Font.known_fonts))
+        except:
+            raise RuntimeError(f"Font {name} is not known")
+
         Font.font_selection_index = Font.known_fonts.index(current_font)
 
     @staticmethod
@@ -26,27 +31,19 @@ class Font:
         font = font_persist.load(filename)
         Font.known_fonts.append(font)
 
-    def __init__(self, name: str, char_w: int, char_h: int, charmap: dict[str, str]):
+    def __init__(self, name: str, character_sprites: dict[str, Sprite]):
         self.name = name
-        self.charmap = charmap
-        self.char_w = char_w
-        self.char_h = char_h
+        self.character_sprites = character_sprites
+        self.char_w = character_sprites["A"].width
+        self.char_h = character_sprites["A"].height
 
     def draw_text(self, x: int, y: int, text: str):
         for index, char in enumerate(text):
             self.__draw_character(x + index * (self.char_w + 1), y, char)
 
     def __draw_character(self, x: int, y: int, character: str):
-        if Engine.screen is None:
-            raise RuntimeError("Screen is None, did you run Font.set_screen?")
-
         if character == " ":
             return
 
-        bitmap = self.charmap[character.upper()]
-
-        for seek in range(self.char_w * self.char_h):
-            if bitmap[seek] == "1":
-                Engine.screen.draw_pixel(
-                    x + seek % self.char_w, y + seek // self.char_w
-                )
+        sprite = self.character_sprites[character.upper()]
+        sprite.draw(x, y)

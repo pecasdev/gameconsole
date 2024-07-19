@@ -1,5 +1,4 @@
 from hardware_state import ButtonState, HardwareState
-import screen
 import time
 
 

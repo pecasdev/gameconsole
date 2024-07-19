@@ -1,5 +1,4 @@
 from engine import Engine
-from font.font_small import font_small
 from hardware_state import HardwareState
 from engine_driver import EngineDriver
 from engine import Object
@@ -26,13 +25,13 @@ class InjectSelectMenu(Object):
         current_selection = self.choices[self.selection_index]
 
         # draw current selection
-        font_small.draw_string(10, 30, "> " + current_selection)
+        Engine.screen.draw_text(10, 30, "> " + current_selection)
 
         def draw_if_exists(x, y, choice_index):
             if choice_index < 0 or choice_index > len(self.choices) - 1:
                 return
 
-            font_small.draw_string(x, y, self.choices[choice_index])
+            Engine.screen.draw_text(x, y, self.choices[choice_index])
 
         # draw choices around current selection
         for i in range(1, InjectSelectMenu.choice_vision_range + 1):
@@ -59,10 +58,8 @@ class InjectSelectMenu(Object):
         return self.choices[self.selection_index]
 
     def step(self):
-        font_small.set_screen(Engine.screen)
-
         if len(self.choices) == 0:
-            font_small.draw_string(10, 10, "NO GAMES FOUND")
+            Engine.screen.draw_text(10, 10, "NO GAMES FOUND")
             Engine.screen.flush()
 
             import sys
