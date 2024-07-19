@@ -1,19 +1,12 @@
 from screen import Screen
 from engine import Engine
-from .border import Border
-from .snake import Snake
-from .score import Score
-from .fruit import spawn_fruit
-
+from .light import Light
+from sprite import Sprite
+import sys
 
 def main():
-    border = Border()
-    score = Score(110, 10)
-    snake = Snake(10, 10)
-
-    Engine.set_tick_cap(20)
-    Engine.create_object(border)
-    Engine.create_object(score)
-    Engine.create_object(snake)
-
-    spawn_fruit(snake=snake)
+    stop_sprite = Sprite.load_from_file("stop_sign.sprite")
+    
+    light = Light(20, 20, stop_sprite)
+    
+    Engine.create_object(light)

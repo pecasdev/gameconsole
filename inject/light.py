@@ -6,14 +6,16 @@ from engine import now
 from .light_state import LightState
 from engine import Engine
 from font import Font
+from sprite import Sprite
 
 
 class Light(Object):
     state: LightState
 
-    def __init__(self, x: int, y: int):
+    def __init__(self, x: int, y: int, stop_sprite: Sprite):
         super().__init__(x, y)
         self.state = LightState()
+        self.stop_sprite = stop_sprite
 
     def prestep(self):
         if HardwareState.ALPHA.just_pressed():
@@ -32,13 +34,20 @@ class Light(Object):
         Font.set_current_font("small")
         if reaction_duration is not None:
             if reaction_duration == -1:
-                Engine.screen.draw_string(self.x, self.y + 20, "too soon")
+                Engine.screen.draw_text(self.x, self.y + 20, "too soon")
             else:
-                Engine.screen.draw_string(
-                    self.x, self.y + 20, f"{reaction_duration} ms"
+                Engine.screen.draw_text(
+                    self.x + 70, self.y + 20, f"{reaction_duration} ms"
                 )
 
-        Engine.screen.draw_string(self.x, self.y, self.state.state)
+        if self.state.state == "idle":
+            Engine.screen.draw_text(self.x, self.y, "Press A to start")
+
+        if self.state.state == "red":
+            self.stop_sprite.draw(self.x, self.y)
+
+        if self.state.state == "green":
+            Engine.screen.draw_text(self.x, self.y, "GO!!!")
 
     def poststep(self):
         if self.state.ready_to_capture_start:
