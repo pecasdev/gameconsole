@@ -1,6 +1,5 @@
 from engine import Object, Engine
-from screen import Screen
-from font.font_small import font_small
+from font import Font
 
 
 class Score(Object):
@@ -10,6 +9,6 @@ class Score(Object):
         super().__init__(x, y)
 
     def step(self):
-        font_small.set_screen(Engine.screen)
+        Font.set_current_font("small")
 
-        font_small.draw_string(self.x, self.y, str(Score.score))
+        Engine.screen.draw_text(self.x, self.y, str(Score.score))

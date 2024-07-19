@@ -1,4 +1,5 @@
 from screen_adaptor.screen_adaptor import ScreenAdaptor
+import font
 
 
 class Screen:
@@ -21,6 +22,9 @@ class Screen:
         for w in range(width):
             for h in range(height):
                 self.draw_pixel(left + w, top + h)
+
+    def draw_text(self, x: int, y: int, text: str):
+        self.adaptor.draw_text(x, y, text, font.Font.current_font())
 
     def kill(self):
         self.adaptor.kill()

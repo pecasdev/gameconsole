@@ -1,10 +1,11 @@
 from random import randrange
 from engine import Object
 from screen import Screen
-from font.font_small import font_small
 from hardware_state import HardwareState
 from engine import now
 from .light_state import LightState
+from engine import Engine
+from font import Font
 
 
 class Light(Object):
@@ -14,7 +15,7 @@ class Light(Object):
         super().__init__(x, y)
         self.state = LightState()
 
-    def prestep(self, screen: Screen):
+    def prestep(self):
         if HardwareState.ALPHA.just_pressed():
             self.state.handle_alpha_press()
 
@@ -22,23 +23,24 @@ class Light(Object):
                 self.state.reaction_stamp_end = now()
                 self.state.ready_to_capture_end = False
 
-    def step(self, screen: Screen):
-        font_small.set_screen(screen)
-
+    def step(self):
         self.state.handle_deadline()
 
         self.state.calculate_reaction_time()
         reaction_duration = self.state.reaction_duration
 
+        Font.set_current_font("small")
         if reaction_duration is not None:
             if reaction_duration == -1:
-                font_small.draw_string(self.x, self.y + 20, "too soon")
+                Engine.screen.draw_string(self.x, self.y + 20, "too soon")
             else:
-                font_small.draw_string(self.x, self.y + 20, f"{reaction_duration} ms")
+                Engine.screen.draw_string(
+                    self.x, self.y + 20, f"{reaction_duration} ms"
+                )
 
-        font_small.draw_string(self.x, self.y, self.state.state)
+        Engine.screen.draw_string(self.x, self.y, self.state.state)
 
-    def poststep(self, screen: Screen):
+    def poststep(self):
         if self.state.ready_to_capture_start:
             self.state.reaction_stamp_start = now()
             self.state.ready_to_capture_start = False

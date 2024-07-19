@@ -6,6 +6,9 @@ class ScreenAdaptor:
     def draw_pixel(self, x: int, y: int):
         raise NotImplementedError
 
+    def draw_text(self, x: int, y: int, text: str, font):
+        font.draw_text(x, y, text)
+
     def clear(self):
         raise NotImplementedError
 

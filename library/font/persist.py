@@ -1,4 +1,5 @@
 import json
+import font
 
 
 def character_dimensions_from_filename(filename: str) -> tuple[int, int]:
@@ -10,13 +11,24 @@ def character_dimensions_from_filename(filename: str) -> tuple[int, int]:
 
 
 def load(filename: str):
-    file = open(filename)
-    charmap = json.load(file)
-    [char_w, char_h] = character_dimensions_from_filename(filename)
-    file.close()
-    return (char_w, char_h, charmap)
+    with open(filename) as f:
+        from_dump = json.load(f)
+
+    return font.Font(
+        from_dump["name"],
+        from_dump["char_w"],
+        from_dump["char_h"],
+        from_dump["charmap"],
+    )
 
 
 def dump(font, dirname: str):
-    with open(f"{dirname}/font_dump_{font.char_w}x{font.char_h}.font", "w") as f:
-        json.dump(font.charmap, f)
+    to_dump = {
+        "name": font.name,
+        "char_w": font.char_w,
+        "char_h": font.char_h,
+        "charmap": font.charmap,
+    }
+
+    with open(f"{dirname}/dump_{font.char_w}x{font.char_h}.font", "w") as f:
+        json.dump(to_dump, f)

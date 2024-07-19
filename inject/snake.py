@@ -2,7 +2,6 @@ from engine import Object, Engine
 from .score import Score
 from screen import Screen
 from hardware_state import HardwareState
-from font.font_small import font_small
 from .fruit import Fruit, spawn_fruit
 
 
