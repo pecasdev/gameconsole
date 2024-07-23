@@ -1,4 +1,4 @@
-from engine import Engine
+import engine
 import json
 
 
@@ -21,11 +21,9 @@ class Sprite:
         self.bitmap = bitmap
         self.width = width
         self.height = height
+        
+        self.__frame_buf = engine.Engine.screen.new_frame_buffer(width, height)
+        self.__frame_buf.load_bitmap(self.bitmap)
 
-    def draw(self, x, y):
-        for seek in range(self.width * self.height):
-            if self.bitmap[seek] == "1":
-                draw_x = x + seek % self.width
-                draw_y = y + seek // self.width
-
-                Engine.screen.draw_pixel(draw_x, draw_y)
+    def blit(self, x, y):
+        self.__frame_buf.blit_to_screen(x, y)

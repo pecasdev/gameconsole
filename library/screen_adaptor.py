@@ -9,7 +9,16 @@ class ScreenAdaptor:
     def draw_text(self, x: int, y: int, text: str, font):
         font.draw_text(x, y, text)
 
+    def new_frame_buffer(self, width: int, height: int):
+        raise NotImplementedError
+
+    def blit(self, x: int, y: int, frame_buffer):
+        raise NotImplementedError
+
     def clear(self):
+        raise NotImplementedError
+
+    def fill(self):
         raise NotImplementedError
 
     def flush(self):
