@@ -1,7 +1,6 @@
 class ButtonState:
-
-    def __init__(self, is_pressed: bool):
-        self.__just_happened = True
+    def __init__(self, is_pressed: bool, just_happened: bool = True):
+        self.__just_happened = just_happened
         self.is_pressed = is_pressed
 
     def ack_just(self):
@@ -27,18 +26,19 @@ class ButtonState:
 
 
 class HardwareState:
-    LEFT: ButtonState = ButtonState(
-        False,
-    )
-    RIGHT: ButtonState = ButtonState(False)
-    UP: ButtonState = ButtonState(False)
+    LEFT: ButtonState = ButtonState(False, False)
+    RIGHT: ButtonState = ButtonState(False, False)
+    UP: ButtonState = ButtonState(False, False)
     DOWN: ButtonState = ButtonState(
+        False,
         False,
     )
     ALPHA: ButtonState = ButtonState(
         False,
+        False,
     )
     BETA: ButtonState = ButtonState(
+        False,
         False,
     )
 
@@ -74,6 +74,15 @@ class HardwareState:
                 "B" + str(HardwareState.BETA),
             ]
         )
+
+    @staticmethod
+    def reset():
+        HardwareState.LEFT = ButtonState(False, False)
+        HardwareState.RIGHT = ButtonState(False, False)
+        HardwareState.UP = ButtonState(False, False)
+        HardwareState.DOWN = ButtonState(False, False)
+        HardwareState.ALPHA = ButtonState(False, False)
+        HardwareState.BETA = ButtonState(False, False)
 
     @staticmethod
     def ack_button_states():
