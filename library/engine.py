@@ -1,5 +1,7 @@
 from hardware_state import ButtonState, HardwareState
+from alarm import Alarm
 import time
+import screen as libscreen
 
 
 class Object:
@@ -32,6 +34,7 @@ def now() -> int:
 
 class Engine:
     objects = []
+    alarms = []
     tick_cap = 100
 
     @staticmethod
@@ -39,18 +42,24 @@ class Engine:
         Engine.tick_cap = tick_cap
 
     @staticmethod
-    def set_screen(screen):
+    def set_screen(screen: libscreen.Screen):
         Engine.screen = screen
 
     @staticmethod
     def reset():
         Engine.objects = []
+        Engine.alarms = []
         Engine.tick_cap = 100
 
     @staticmethod
     def create_object(obj: Object):
         Engine.objects.append(obj)
         obj.create()
+
+    @staticmethod
+    def create_alarm(alarm: Alarm):
+        Engine.alarms.append(alarm)
+        alarm.start()
 
     @staticmethod
     def remove_object(obj: Object):
@@ -66,6 +75,16 @@ class Engine:
 
         if surplus_time > 0:
             time.sleep(surplus_time / 1000)
+
+    @staticmethod
+    def __process_alarms():
+        to_remove = []
+        for alarm in Engine.alarms:
+            if alarm.handle():
+                to_remove.append(alarm)
+
+        for alarm in to_remove:
+            Engine.alarms.remove(alarm)
 
     @staticmethod
     def __process_objects():
@@ -85,6 +104,7 @@ class Engine:
     @staticmethod
     def tick():
         tick_started = now()
+        Engine.__process_alarms()
         Engine.__process_objects()
         tick_ended = now()
 
