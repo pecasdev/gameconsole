@@ -1,6 +1,6 @@
 import json
 import font
-from sprite import Sprite
+import sprite
 
 
 def load(filename: str):
@@ -11,7 +11,8 @@ def load(filename: str):
     char_h = from_dump["char_h"]
 
     character_sprites = {
-        k: Sprite(char_w, char_h, v) for k, v in from_dump["character_bitmaps"].items()
+        k: sprite.Sprite(char_w, char_h, bitmap)
+        for k, bitmap in from_dump["character_bitmaps"].items()
     }
 
     return font.Font(from_dump["name"], character_sprites)
