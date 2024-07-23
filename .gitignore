@@ -1,3 +1,9 @@
+tools/sprite_convert/input/
+tools/sprite_convert/output/
+tools/font_convert/input/
+tools/font_convert/output/
+inject/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
