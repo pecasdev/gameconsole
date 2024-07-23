@@ -35,8 +35,4 @@ class PygameDriver:
         self.display.blit(scaled_surface, dest)
 
     def flip(self):
-        self.__tick()
         pygame.display.flip()
-
-    def __tick(self):
-        self.clock.tick(PygameDriver.framerate)
