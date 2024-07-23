@@ -29,13 +29,14 @@ Font.import_font("library/font/default_fonts/small.font")
 
 
 inject_selection = block_and_return_inject_selection()
-print("selected injection:", inject_selection)
 copy_injection_from_sd(inject_selection)
 
 # run injection setup
 from inject import main
 
+print("RUNNING INJECTION SETUP")
 main()
+print("DONE SETTING UP")
 
 # run engine
 engine_driver = EngineDriver()
