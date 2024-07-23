@@ -12,13 +12,18 @@ def parse_image_to_sprite(image, x, y, width, height):
     return sprite.Sprite(width, height, bitmap)
 
 
+def filename_without_extension(filename: str):
+    index = filename.rfind(".")
+    return filename[:index]
+
+
 def parse_file(input_dir: str, output_dir: str, filename: str):
     image = Image.open(f"{input_dir}/{filename}").convert("RGB")
     sprite = parse_image_to_sprite(image, 0, 0, image.width, image.height)
 
     image.close()
 
-    with open(f"{output_dir}/{filename}.sprite", "w") as f:
+    with open(f"{output_dir}/{filename_without_extension(filename)}.sprite", "w") as f:
         json.dump(sprite.to_dict(), f)
 
 
