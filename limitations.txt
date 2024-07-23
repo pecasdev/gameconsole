@@ -1,0 +1,8 @@
+stuff that doesn't exist:
+
+Enum
+match statement
+most non-standard imports
+
+the emulator is slow by about 50-100ms, this shouldn't matter for most games but
+for some games where reaction time is important, like the reaction, i can confirm it runs properly on the hardware
