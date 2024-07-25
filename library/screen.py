@@ -1,5 +1,5 @@
 from frame_buffer_adaptor import FrameBufferAdaptor
-from screen_adaptor import ScreenAdaptor
+import screen_adaptor
 import font
 
 
@@ -7,7 +7,7 @@ import font
 
 
 class Screen:
-    def __init__(self, screen_adaptor: ScreenAdaptor):
+    def __init__(self, screen_adaptor: screen_adaptor.ScreenAdaptor):
         self.screen_adaptor = screen_adaptor
         self.width = screen_adaptor.width
         self.height = screen_adaptor.height

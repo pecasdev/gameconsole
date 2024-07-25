@@ -43,8 +43,9 @@ class Engine:
         Engine.tick_cap = tick_cap
 
     @staticmethod
-    def set_screen(screen: libscreen.Screen):
+    def set_screen(screen):
         Engine.screen = screen
+
     @staticmethod
     def set_emulator_tick_override(emulator_tick_override):
         Engine.emulator_tick_override = emulator_tick_override

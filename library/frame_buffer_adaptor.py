@@ -1,9 +1,9 @@
 # this is only used for blitting sprites
-from screen_adaptor import ScreenAdaptor
+import screen_adaptor
 
 
 class FrameBufferAdaptor:
-    def __init__(self, width, height, screen_adaptor: ScreenAdaptor) -> None:
+    def __init__(self, width, height, screen_adaptor: screen_adaptor.ScreenAdaptor) -> None:
         self.screen_adaptor = screen_adaptor
         self.width = width
         self.height = height
