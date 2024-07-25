@@ -54,6 +54,11 @@ class Engine:
             import pygame
 
             Engine.clock = pygame.time.Clock()
+
+    @staticmethod
+    def objects_of_class(clazz):
+        return filter(lambda x: isinstance(x, clazz), Engine.objects)
+    
     @staticmethod
     def reset():
         Engine.objects = []
