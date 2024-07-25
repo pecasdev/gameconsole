@@ -89,6 +89,7 @@ class Emulator:
 
     def runloop(self):
         self.running = True
+        Engine.set_emulator_tick_override(True)
         while self.running:
             try:
                 self.handle_pygame_events()

@@ -36,6 +36,7 @@ class Engine:
     objects = []
     alarms = []
     tick_cap = 100
+    emulator_tick_override = False
 
     @staticmethod
     def set_tick_cap(tick_cap: int):
@@ -44,7 +45,14 @@ class Engine:
     @staticmethod
     def set_screen(screen: libscreen.Screen):
         Engine.screen = screen
+    @staticmethod
+    def set_emulator_tick_override(emulator_tick_override):
+        Engine.emulator_tick_override = emulator_tick_override
 
+        if emulator_tick_override:
+            import pygame
+
+            Engine.clock = pygame.time.Clock()
     @staticmethod
     def reset():
         Engine.objects = []
@@ -71,10 +79,14 @@ class Engine:
 
     @staticmethod
     def __tick_sleep(start, end):
-        surplus_time = (1000 / Engine.tick_cap) - (end - start)
+        if Engine.emulator_tick_override:
+            Engine.clock.tick(Engine.tick_cap)
 
-        if surplus_time > 0:
-            time.sleep(surplus_time / 1000)
+        else:
+            surplus_time = (1000 / Engine.tick_cap) - (end - start)
+
+            if surplus_time > 0:
+                time.sleep(surplus_time / 1000)
 
     @staticmethod
     def __process_alarms():
