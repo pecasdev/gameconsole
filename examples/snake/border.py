@@ -1,22 +1,27 @@
 from engine import Object, Engine
-from screen import Screen
 
 
 class Border(Object):
+    thickness = 2
+    width = 90
+    height = 60
+
     def __init__(self):
         super().__init__(0, 0)
+        self.is_title_screen = True
 
-    def __draw_border(self):
-        # top/bottom
-        for x in range(128):
-            Engine.screen.draw_pixel(x, 0)
-            Engine.screen.draw_pixel(x, 63)
+    def draw(self):
+        w = Border.width
+        t = Border.thickness
+        h = Border.height
 
-        # left/divider/right
-        for y in range(64):
-            Engine.screen.draw_pixel(0, y)
-            Engine.screen.draw_pixel(101, y)
-            Engine.screen.draw_pixel(127, y)
+        # top/bottom (don't overlap with left/right)
+        Engine.screen.draw_rect(t, 0, t + w, t)
+        Engine.screen.draw_rect(t, t + h, t + w, t)
+
+        # left/right
+        Engine.screen.draw_rect(0, 0, t, t + h + t)
+        Engine.screen.draw_rect(t + w, 0, t, t + h + t)
 
     def step(self):
-        self.__draw_border()
+        self.draw()
