@@ -10,7 +10,7 @@ class HardwareButtonPin:
 
     ALPHA = Pin(16, Pin.IN, Pin.PULL_DOWN)
     BETA = Pin(17, Pin.IN, Pin.PULL_DOWN)
-    
+
     LEFT = Pin(18, Pin.IN, Pin.PULL_DOWN)
     DOWN = Pin(19, Pin.IN, Pin.PULL_DOWN)
     RIGHT = Pin(20, Pin.IN, Pin.PULL_DOWN)

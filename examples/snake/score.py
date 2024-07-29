@@ -2,10 +2,10 @@ from engine import Engine, Object
 from font import Font
 
 
-class Score(Object):    
+class Score(Object):
     def __init__(self, x: int, y: int):
         super().__init__(x, y)
-        
+
         # score is just the size of your snake, you start at size=1
         self.score = 1
 

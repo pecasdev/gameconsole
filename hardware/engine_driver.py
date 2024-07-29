@@ -46,12 +46,12 @@ class EngineDriver:
 
     def runloop(self):
         create_hardware_listener_thread(self)
-        #debug_print_hardware_state = handle_debug_print_hardware_state()
+        # debug_print_hardware_state = handle_debug_print_hardware_state()
 
         while self.running:
             try:
                 self.update_engine_hardware_state()
-                #debug_print_hardware_state()
+                # debug_print_hardware_state()
 
                 Engine.tick()
                 HardwareState.ack_button_states()
