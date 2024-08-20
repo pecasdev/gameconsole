@@ -10,6 +10,7 @@ def main():
     ralph_go = Sprite.load_from_file("sprites/ralph_go.sprite")
     ralph_thumb_up = Sprite.load_from_file("sprites/ralph_thumb_up.sprite")
 
+    # todo - load sprites
     ralph = Ralph(
         {
             "sleep": ralph_sleep,

@@ -14,6 +14,7 @@ class Font:
     def set_current_font(name: str):
         try:
             current_font = next(filter(lambda f: f.name == name, Font.known_fonts))
+            current_font.load()
         except:
             raise RuntimeError(f"Font {name} is not known")
 
@@ -34,6 +35,10 @@ class Font:
         self.char_w = character_sprites["A"].width
         self.char_h = character_sprites["A"].height
 
+    def load(self):
+        for sprite in self.character_sprites.values():
+            sprite.load()
+        
     def draw_text(self, x: int, y: int, text: str):
         lines = text.split("\n")
         for y_offset, line in enumerate(lines):

@@ -19,6 +19,7 @@ def create_emulator(program_main):
 
     # import default fonts
     Font.import_font("library/font/default_fonts/small.font")
+    Font.set_current_font("small")
 
     # run injection setup
     program_main()

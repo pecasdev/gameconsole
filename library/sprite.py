@@ -21,8 +21,11 @@ class Sprite:
         self.bitmap = bitmap
         self.width = width
         self.height = height
-        
-        self.__frame_buf = engine.Engine.screen.new_frame_buffer(width, height)
+
+    def load(self):
+        self.__frame_buf = engine.Engine.screen.new_frame_buffer(
+            self.width, self.height
+        )
         self.__frame_buf.load_bitmap(self.bitmap)
 
     def blit(self, x, y):
