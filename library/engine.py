@@ -1,5 +1,5 @@
 from hardware_state import ButtonState, HardwareState
-from alarm import Alarm
+import alarm
 import time
 import screen as libscreen
 
@@ -43,7 +43,7 @@ class Engine:
         Engine.tick_cap = tick_cap
 
     @staticmethod
-    def set_screen(screen):
+    def set_screen(screen: "libscreen.Screen"):
         Engine.screen = screen
 
     @staticmethod
@@ -58,7 +58,7 @@ class Engine:
     @staticmethod
     def objects_of_class(clazz):
         return filter(lambda x: isinstance(x, clazz), Engine.objects)
-    
+
     @staticmethod
     def reset():
         Engine.objects = []
@@ -69,11 +69,13 @@ class Engine:
     def create_object(obj: Object):
         Engine.objects.append(obj)
         obj.create()
+        return obj
 
     @staticmethod
-    def create_alarm(alarm: Alarm):
+    def create_alarm(alarm: "alarm.Alarm"):
         Engine.alarms.append(alarm)
         alarm.start()
+        return alarm
 
     @staticmethod
     def remove_object(obj: Object):

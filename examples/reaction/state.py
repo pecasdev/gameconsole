@@ -21,12 +21,11 @@ class State:
             self.change_state_to("go")
 
         alarm = Alarm(func, randrange(2000, 3500))
-        self.current_alarm = alarm
         return alarm
 
     def change_state_to(self, new_state):
         if new_state == "wait":
-            Engine.create_alarm(self.__new_alarm_change_to_go())
+            self.current_alarm = Engine.create_alarm(self.__new_alarm_change_to_go())
             self.ready_to_capture_end = False
 
         if new_state == "go":
