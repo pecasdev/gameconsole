@@ -28,7 +28,7 @@ mount_sd(screen)
 Font.import_font("library/font/default_fonts/small.font")
 
 
-inject_selection = block_and_return_inject_selection()
+inject_selection = block_and_return_inject_selection(ssd1306_driver)
 copy_injection_from_sd(inject_selection)
 
 # run injection setup
