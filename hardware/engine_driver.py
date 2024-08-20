@@ -64,6 +64,7 @@ class EngineDriver:
             HardwareState.reset()
 
 
+# todo - replace with library debug function
 def handle_debug_print_hardware_state():
     prev_line = ""
 
