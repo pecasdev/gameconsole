@@ -27,6 +27,9 @@ class PygameScreenAdaptor(ScreenAdaptor):
 
     def draw_pixel(self, x: int, y: int):
         self.display.set_at((x, y), pygame.Color("white"))
+    
+    def clear_pixel(self, x: int, y: int):
+        self.display.set_at((x, y), pygame.Color("black"))
 
     def draw_text(self, x: int, y: int, text: str, font: Font):
         font.draw_text(x, y, text)

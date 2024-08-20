@@ -13,6 +13,9 @@ class OledScreenAdaptor(ScreenAdaptor):
 
     def draw_pixel(self, x: int, y: int):
         self.driver.pixel(x, y, 1)
+    
+    def clear_pixel(self, x:int, y:int):
+        self.driver.pixel(x, y, 0)
 
     def clear(self):
         self.driver.fill(0)
