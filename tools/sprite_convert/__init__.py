@@ -27,7 +27,7 @@ def parse_file(input_dir: str, output_dir: str, filename: str):
         json.dump(sprite.to_dict(), f)
 
 
-if __name__ == "__main__":
+def sprite_convert():
     current_dir = os.path.dirname(__file__)
     for filename in os.listdir(f"{current_dir}/input"):
         parse_file(f"{current_dir}/input", f"{current_dir}/output", filename)

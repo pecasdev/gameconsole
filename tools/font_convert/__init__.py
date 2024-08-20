@@ -30,7 +30,7 @@ def parse_file(current_dir: str, filename: str):
     font_persist.dump(font.Font("dump", charmap), f"{current_dir}/output")
 
 
-if __name__ == "__main__":
+def font_convert():
     current_dir = os.path.dirname(__file__)
     for filename in os.listdir(f"{current_dir}/input"):
         parse_file(current_dir, f"input/{filename}")
