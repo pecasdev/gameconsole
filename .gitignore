@@ -4,6 +4,9 @@ tools/font_convert/input/
 tools/font_convert/output/
 inject/
 
+hardware/pcb/gerber/
+hardware/pcb/gameconsole-backups/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
