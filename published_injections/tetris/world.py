@@ -4,14 +4,15 @@
 # title screen: explain rules and buttons
 from random import randrange
 
-from hardware_state import HardwareState
-from util import create_debug_print_handler
 from engine import Engine, Object
-from .tetromino import random_tetromino, known_tetrominos
-from .tetromino.tetromino import Tetromino, TETROMINO_THICKNESS, shape_iterate
+from hardware_state import HardwareState
 from sprite import Sprite
-from .stack import Stack, STACK_ROW_COUNT
+from util import create_debug_print_handler
+
 from .hud import Hud
+from .stack import STACK_ROW_COUNT, Stack
+from .tetromino import known_tetrominos, random_tetromino
+from .tetromino.tetromino import TETROMINO_THICKNESS, Tetromino, shape_iterate
 
 
 class World(Object):

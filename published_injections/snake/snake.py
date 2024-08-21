@@ -3,7 +3,6 @@ from hardware_state import ButtonState, HardwareState
 
 from .border import Border
 from .fruit import Fruit
-from .score import Score
 
 
 class Velocity:
