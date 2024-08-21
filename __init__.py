@@ -18,10 +18,16 @@ if __name__ == "__main__":
         from tools.sprite_convert import sprite_convert
 
         sprite_convert()
-    
-    if sys.argv[1] == "flash_hardware":
+
+    if sys.argv[1] == "flash_to_pico":
         import subprocess
-        subprocess.run(".\\tools\\flash\\flash_to_pico.bat")
+
+        subprocess.run(".\\tools\\flash_to_pico\\flash_to_pico.bat")
+
+    if sys.argv[1] == "flash_to_sd":
+        from tools.flash_to_sd import flash_to_sd
+
+        flash_to_sd()
 
     if sys.argv[1] == "font_convert":
         from tools.font_convert import font_convert
