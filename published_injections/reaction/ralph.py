@@ -4,6 +4,7 @@ from engine import Engine
 # his name is reaction ralph
 class Ralph:
     def __init__(self, sprites):
+        [sprite.load() for sprite in sprites.values()]
         self.sprites = sprites
 
         self.current_sprite_name = "sleep"

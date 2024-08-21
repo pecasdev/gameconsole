@@ -25,6 +25,9 @@ class Object:
         pass
 
 
+# todo - add debug printing system to objects (sidetrack)
+
+
 def now() -> int:
     if hasattr(time, "ticks_ms"):
         return int(time.ticks_ms())  # type: ignore
