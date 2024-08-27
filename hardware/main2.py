@@ -35,10 +35,13 @@ copy_injection_from_sd(inject_selection)
 # run injection setup
 from inject import main
 
-print("RUNNING INJECTION SETUP")
-main()
-print("DONE SETTING UP")
+try:
+    print("RUNNING INJECTION SETUP")
+    main()
+    print("DONE SETTING UP")
+except BaseException as e:
+    print("exception: injection setup")
+    print(e)
 
-# run engine
 engine_driver = EngineDriver()
 engine_driver.runloop()

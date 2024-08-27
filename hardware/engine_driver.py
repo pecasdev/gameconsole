@@ -88,6 +88,11 @@ class EngineDriver:
 
             except KeyboardInterrupt:
                 self.running = False
+            
+            except BaseException as e:
+                self.running = False
+                print("exception: runloop")
+                print(e)
 
         if not self.running:
             Engine.reset()
