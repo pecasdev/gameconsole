@@ -33,9 +33,9 @@ def _determine_injections_to_flash():
     injections_to_flash = []
 
     if INCLUDE_INJECTION_FROM_INJECT_FOLDER:
-        injections_to_flash.append("inject")
+        injections_to_flash.append("dist/inject")
 
-    for injection in os.listdir("published_injections"):
+    for injection in os.listdir("dist/published_injections"):
         injections_to_flash.append(injection)
 
     return injections_to_flash
@@ -109,8 +109,8 @@ def _move_file_to_sd(filepath, drive):
         shutil.rmtree(destination)
 
     # hardcoded :(
-    if filepath != "inject":
-        filepath = f"published_injections/{filepath}"
+    if filepath != "dist/inject":
+        filepath = f"dist/published_injections/{filepath}"
 
     for attempt in range(1, 6):
         try:

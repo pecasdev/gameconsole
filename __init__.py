@@ -1,3 +1,15 @@
+def remove_types_from_source_code():
+    from tools.remove_type_hints.walk_and_remove import walk_and_remove_type_hints
+    import os
+
+    walk_and_remove_type_hints("library")
+    walk_and_remove_type_hints("hardware")
+
+    walk_and_remove_type_hints("inject")
+    for injection in os.listdir("published_injections"):
+        walk_and_remove_type_hints(f"published_injections/{injection}")
+
+
 if __name__ == "__main__":
     # idk if this is illegal but i can't get imports to work properly. i'm so tired.
     import os
@@ -22,14 +34,19 @@ if __name__ == "__main__":
     if sys.argv[1] == "flash_to_pico":
         import subprocess
 
+        remove_types_from_source_code()
         subprocess.run(".\\tools\\flash_to_pico\\flash_to_pico.bat")
 
     if sys.argv[1] == "flash_to_sd":
         from tools.flash_to_sd import flash_to_sd
 
+        remove_types_from_source_code()
         flash_to_sd()
 
     if sys.argv[1] == "font_convert":
         from tools.font_convert import font_convert
 
         font_convert()
+
+    if sys.argv[1] == "remove_type_hints":
+        remove_types_from_source_code()

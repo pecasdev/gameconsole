@@ -1,17 +1,23 @@
 @echo off
 @REM run me from the root of gameconsole
 
+@REM create empty sd folder for mounting
 mpremote mkdir sd > nul
 
+@REM install packages
 mpremote ^
 mip install sdcard + ^
-mip install ssd1306 + ^
-cp -r library : + ^
-cp hardware/copy_injection_from_sd.py : + ^
-cp hardware/engine_driver.py : + ^
-cp hardware/hardware_button_driver.py : + ^
-cp hardware/hardware_frame_buffer_adaptor.py : + ^
-cp hardware/inject_select_menu.py : + ^
-cp hardware/main2.py :main2.py + ^
-cp hardware/mount_sd.py : + ^
-cp hardware/oled_screen_adaptor.py :
+mip install ssd1306
+
+@REM any code that's meant for the pico should be in dist
+cd dist
+
+@REM flash api library
+mpremote cp -r library :
+
+@REM flash hardware library
+cd hardware
+mpremote cp -r hardware_library :
+
+@REM flash main2.py (TODO - rename to main.py later)
+mpremote cp main2.py :main2.py
