@@ -1,7 +1,8 @@
 from engine import Object, Engine
+from hardware_state import HardwareState
 from .state import State
 from .reaction_record import ReactionRecord
-from engine import HardwareState
+
 
 
 class World(Object):
@@ -58,7 +59,6 @@ class World(Object):
 
     def draw_title_screen(self):
         if HardwareState.ALPHA.just_released():
-            print("alpha just released")
             self.is_title_screen = False
 
         self.ralph.draw_sprite()

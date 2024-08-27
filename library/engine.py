@@ -1,4 +1,4 @@
-from hardware_state import ButtonState, HardwareState
+import hardware_state
 import alarm
 import time
 import screen as libscreen
@@ -77,8 +77,10 @@ class Engine:
         Engine.objects.remove(obj)
 
     @staticmethod
-    def update_hardware_state(hardware_state_dict: dict[str, ButtonState]):
-        HardwareState.update_from_dict(hardware_state_dict)
+    def update_hardware_state(
+        hardware_state_dict: dict[str, "hardware_state.ButtonState"]
+    ):
+        hardware_state.HardwareState.update_from_dict(hardware_state_dict)
 
     @staticmethod
     def __tick_sleep(start, end):

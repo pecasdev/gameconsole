@@ -23,7 +23,8 @@ class EngineDriver:
             for (name, pin) in button_name_to_hardware_button_pin.items()
         ]
 
-        self.internal_hardware_state = HardwareState.as_dict()
+        self.previous_internal_hardware_state = HardwareState.as_dict()
+        self.internal_hardware_state_queue = []
 
         self.running = True
 
@@ -36,10 +37,20 @@ class EngineDriver:
         return handle
 
     def update_internal_hardware_state(self):
-        self.internal_hardware_state = self.__hardware_state_dict_from_prop()
+        state = self.__hardware_state_dict_from_prop()
+        new_hardware_state = {
+            k: v
+            for k, v in state.items()
+            if v.is_pressed != self.previous_internal_hardware_state[k].is_pressed
+        }
+
+        if len(new_hardware_state) > 0 and len(self.internal_hardware_state_queue) < 10:
+            self.internal_hardware_state_queue.append(new_hardware_state)
+            self.previous_internal_hardware_state.update(new_hardware_state)
 
     def update_engine_hardware_state(self):
-        Engine.update_hardware_state(self.internal_hardware_state)
+        if len(self.internal_hardware_state_queue) > 0:
+            Engine.update_hardware_state(self.internal_hardware_state_queue.pop(0))
 
     def __hardware_state_dict_from_prop(self) -> dict[str, ButtonState]:
         return dict([handle() for handle in self.button_handlers])

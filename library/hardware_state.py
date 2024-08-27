@@ -1,7 +1,11 @@
+from now import now
+
+
 class ButtonState:
     def __init__(self, is_pressed: bool, just_happened: bool = True):
         self.__just_happened = just_happened
         self.is_pressed = is_pressed
+        self.event_timestamp = now()
 
     def ack_just(self):
         self.__just_happened = False
@@ -44,12 +48,18 @@ class HardwareState:
 
     @staticmethod
     def update_from_dict(dict: dict[str, ButtonState]):
-        HardwareState.LEFT.update(dict["LEFT"])
-        HardwareState.RIGHT.update(dict["RIGHT"])
-        HardwareState.UP.update(dict["UP"])
-        HardwareState.DOWN.update(dict["DOWN"])
-        HardwareState.ALPHA.update(dict["ALPHA"])
-        HardwareState.BETA.update(dict["BETA"])
+        if "LEFT" in dict:
+            HardwareState.LEFT.update(dict["LEFT"])
+        if "RIGHT" in dict:
+            HardwareState.RIGHT.update(dict["RIGHT"])
+        if "UP" in dict:
+            HardwareState.UP.update(dict["UP"])
+        if "DOWN" in dict:
+            HardwareState.DOWN.update(dict["DOWN"])
+        if "ALPHA" in dict:
+            HardwareState.ALPHA.update(dict["ALPHA"])
+        if "BETA" in dict:
+            HardwareState.BETA.update(dict["BETA"])
 
     @staticmethod
     def as_dict():
