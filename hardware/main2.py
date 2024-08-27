@@ -2,6 +2,7 @@
 import sys
 
 sys.path.insert(0, "library")
+sys.path.insert(0, "hardware_library")
 
 from machine import Pin, I2C
 import ssd1306
@@ -24,7 +25,7 @@ screen_adaptor = OledScreenAdaptor(ssd1306_driver)
 screen = Screen(screen_adaptor)
 Engine.set_screen(screen)
 
-mount_sd(screen)
+mount_sd()
 
 # import default fonts
 Font.import_font("library/font/default_fonts/small.font")
