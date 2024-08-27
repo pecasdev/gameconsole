@@ -19,7 +19,7 @@ def parse_file(current_dir: str, filename: str):
     image = Image.open(f"{current_dir}/{filename}").convert("RGB")
 
     charmap: dict[str, Sprite] = {}
-    for seek in range(6 * 7):
+    for seek in range(len(font.Font.available_characters)):
         character = font.Font.available_characters[seek]
         sprite = parse_image_to_sprite(
             image, seek % 6 * (char_w + 1), seek // 6 * (char_h + 1), char_w, char_h

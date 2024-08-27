@@ -1,14 +1,15 @@
 import font.persist as font_persist
 
+
 class Font:
     known_fonts = []
     font_selection_index: int = 0
 
-    # todo - update font with more characters
     available_characters = (
         [chr(ord("A") + i) for i in range(26)]
         + [str(i) for i in range(10)]
         + [c for c in "><!?:-"]
+        + [c for c in "()%+=#"]
     )
 
     @staticmethod
@@ -39,7 +40,7 @@ class Font:
     def load(self):
         for sprite in self.character_sprites.values():
             sprite.load()
-        
+
     def draw_text(self, x: int, y: int, text: str):
         lines = text.split("\n")
         for y_offset, line in enumerate(lines):
