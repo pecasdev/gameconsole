@@ -1,6 +1,7 @@
 from now import now
 
 
+# todo - make just_pressed and just_released variables instead of functions
 class ButtonState:
     def __init__(self, is_pressed: bool, just_happened: bool = True):
         self.__just_happened = just_happened
