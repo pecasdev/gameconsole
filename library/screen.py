@@ -1,7 +1,7 @@
-from frame_buffer_adaptor import FrameBufferAdaptor
-import screen_adaptor
 import font
-
+import screen_adaptor
+from font.font_manager import FontManager
+from frame_buffer_adaptor import FrameBufferAdaptor
 
 # frame buffer adaptor is packaged inside screenadaptor
 
@@ -39,14 +39,14 @@ class Screen:
         for w in range(width):
             for h in range(height):
                 self.draw_pixel(left + w, top + h)
-    
+
     def clear_rect(self, left: int, top: int, width: int, height: int):
         for w in range(width):
             for h in range(height):
                 self.clear_pixel(left + w, top + h)
 
     def draw_text(self, x: int, y: int, text: str):
-        self.screen_adaptor.draw_text(x, y, text, font.Font.current_font())
+        self.screen_adaptor.draw_text(x, y, text, FontManager.__get_current_font())
 
     def kill(self):
         self.screen_adaptor.kill()

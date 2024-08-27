@@ -18,8 +18,8 @@ Read the **ENTIRE** documentation from start to finish (no skimming!), there's n
 	- Screen
 	- Engine + Object
 	- Hardware State
-	- Font
 	- Sprite
+	- Font
 	- Alarm
 - Tools
 - Limitations

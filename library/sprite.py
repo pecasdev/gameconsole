@@ -23,6 +23,7 @@ class Sprite:
         self.height = height
 
     def load(self):
+        # todo - remove load function, have it be done automatically on init, ignored in emulation
         self.__frame_buf = engine.Engine.screen.new_frame_buffer(
             self.width, self.height
         )
