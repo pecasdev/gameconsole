@@ -4,6 +4,7 @@ Enum
 match statement
 most non-standard imports
 string zfill
+https://docs.micropython.org/en/latest/genrst/index.html
 
 the emulator is slow by about 50-100ms, this shouldn't matter for most games but
 for some games where reaction time is important, like the reaction, i can confirm it runs properly on the hardware
