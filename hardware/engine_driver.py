@@ -8,6 +8,9 @@ from hardware_state import ButtonState, HardwareState
 from now import now
 
 class EngineDriver:
+    DEBUG_PRINT_TPS_COUNT = False
+    DEBUG_PRINT_HW_STATE = True
+    
     def __init__(self) -> None:
         button_name_to_hardware_button_pin = {
             "LEFT": HardwareButtonPin.LEFT,
@@ -57,15 +60,31 @@ class EngineDriver:
 
     def runloop(self):
         create_hardware_listener_thread(self)
-        # debug_print_hardware_state = handle_debug_print_hardware_state()
+        
+        if EngineDriver.DEBUG_PRINT_HW_STATE:
+            debug_print_hardware_state = handle_debug_print_hardware_state()
 
+        if EngineDriver.DEBUG_PRINT_TPS_COUNT:
+            ticks_since_last_stamp = 0
+            last_stamp = now()
+            
         while self.running:
             try:
                 self.update_engine_hardware_state()
-                # debug_print_hardware_state()
+                
+                if EngineDriver.DEBUG_PRINT_HW_STATE:
+                    debug_print_hardware_state()
 
                 Engine.tick()
                 HardwareState.ack_button_states()
+                
+                if EngineDriver.DEBUG_PRINT_TPS_COUNT:
+                    if now() - last_stamp > 1000:
+                        print("ENGINE TPS:", ticks_since_last_stamp)
+                        last_stamp = now()
+                        ticks_since_last_stamp = 0
+                    else:
+                        ticks_since_last_stamp += 1
 
             except KeyboardInterrupt:
                 self.running = False

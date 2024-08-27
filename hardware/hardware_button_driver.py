@@ -2,7 +2,7 @@
 
 from machine import Pin
 import time
-from engine import now
+from now import now
 
 
 class HardwareButtonPin:
@@ -50,7 +50,19 @@ def create_hardware_listener_thread(engine_driver):
     import _thread
 
     def hardware_loop(engine_driver):
+        if engine_driver.DEBUG_PRINT_TPS_COUNT:
+            ticks_since_last_stamp = 0
+            last_stamp = now()
+            
         while engine_driver.running:
             engine_driver.update_internal_hardware_state()
+            
+            if engine_driver.DEBUG_PRINT_TPS_COUNT:
+                if now() - last_stamp > 1000:
+                    print("HWL TPS:", ticks_since_last_stamp)
+                    last_stamp = now()
+                    ticks_since_last_stamp = 0
+                else:
+                    ticks_since_last_stamp += 1
 
     _thread.start_new_thread(hardware_loop, [engine_driver])
