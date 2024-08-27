@@ -1,7 +1,3 @@
-tools/sprite_convert/input/
-tools/sprite_convert/output/
-tools/font_convert/input/
-tools/font_convert/output/
 inject/
 
 hardware/pcb/gerber/
