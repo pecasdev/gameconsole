@@ -14,6 +14,8 @@ from mount_sd import mount_sd
 from inject_select_menu import block_and_return_inject_selection
 from copy_injection_from_sd import copy_injection_from_sd
 from font import Font
+from now import now
+from loadscreen import draw_loadscreen
 
 # todo - sd card stuff
 
@@ -30,6 +32,7 @@ Font.set_current_font("small")
 
 
 inject_selection = block_and_return_inject_selection(ssd1306_driver)
+draw_loadscreen(inject_selection)
 copy_injection_from_sd(inject_selection)
 
 # run injection setup

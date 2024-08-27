@@ -4,6 +4,7 @@ class Font:
     known_fonts = []
     font_selection_index: int = 0
 
+    # todo - update font with more characters
     available_characters = (
         [chr(ord("A") + i) for i in range(26)]
         + [str(i) for i in range(10)]
