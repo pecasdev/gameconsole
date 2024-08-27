@@ -4,14 +4,20 @@ import shutil
 import time
 
 # disable this if you don't want to copy over the injection in the "inject" folder
-INCLUDE_INJECTION_FROM_INJECT_FOLDER = True
+INCLUDE_INJECTION_FROM_INJECT_FOLDER = False
 
 # disable this if you don't want to remove unknown injections
 REMOVE_UNUSED_INJECTIONS = True
 
+# set this to None if the drive changes frequently
+DEFAULT_SD_DRIVE = "D"
+
 
 def _specify_drive():
-    return input("What drive is the SD card mounted on? ")
+    if DEFAULT_SD_DRIVE is None:
+        return input("What drive is the SD card mounted on? ")
+    else:
+        return DEFAULT_SD_DRIVE
 
 
 def _assert_drive_is_valid(drive):
@@ -82,6 +88,7 @@ def _confirm_user_intent():
         return
     else:
         print("'Y' not received, aborting")
+        sys.exit()
 
 
 # idk why shutil copies over empty folders, very annoying
