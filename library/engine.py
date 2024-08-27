@@ -2,7 +2,7 @@ from hardware_state import ButtonState, HardwareState
 import alarm
 import time
 import screen as libscreen
-
+from now import now
 
 class Object:
     def __init__(self, x: int, y: int):
@@ -26,14 +26,6 @@ class Object:
 
 
 # todo - add debug printing system to objects (sidetrack)
-
-
-def now() -> int:
-    if hasattr(time, "ticks_ms"):
-        return int(time.ticks_ms())  # type: ignore
-    else:
-        return int(time.time() * 1000)
-
 
 class Engine:
     objects = []

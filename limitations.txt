@@ -8,6 +8,9 @@ string zfill
 the emulator is slow by about 50-100ms, this shouldn't matter for most games but
 for some games where reaction time is important, like the reaction, i can confirm it runs properly on the hardware
 
+the emulator is currently broken for low tick rates cause it will drop inputs
+if you're not currently holding a key when the next tick happens. should probably
+fix this before you release lol
 
 notes:
 connect to VBUS from battery pack

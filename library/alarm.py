@@ -1,4 +1,4 @@
-import engine
+from now import now
 
 class Alarm:
     def __init__(self, func, timeout_ms) -> None:
@@ -7,7 +7,7 @@ class Alarm:
         self.stopped = False
     
     def start(self):
-        self.start_stamp = engine.now()
+        self.start_stamp = now()
     
     def stop(self):
         self.stopped = True
@@ -17,7 +17,7 @@ class Alarm:
         if self.stopped:
             return True
         
-        if engine.now() > self.start_stamp + self.timeout_ms:
+        if now() > self.start_stamp + self.timeout_ms:
             self.func()
             return True
     
