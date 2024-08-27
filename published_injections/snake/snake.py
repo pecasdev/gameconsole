@@ -37,7 +37,10 @@ class Snake(Object):
         super().__init__(x, y)
         self.world = world
         self.body = [(x, y)]
-        self.velocity = Velocity.NONE
+
+        self.actual_velocity = Velocity.NONE
+        self.proposed_velocity_buffer = []
+
         self.growth_left = 0
         self.is_dead = False
 
@@ -55,15 +58,17 @@ class Snake(Object):
 
     def next_position(self):
         return [
-            self.x + self.velocity[0] * self.thickness,
-            self.y + self.velocity[1] * self.thickness,
+            self.x + self.actual_velocity[0] * self.thickness,
+            self.y + self.actual_velocity[1] * self.thickness,
         ]
 
     def update_velocity(self):
-        # don't let player switch from left to right immediately (they would instantly die)
-        for button, new_velocity in button_to_velocity().items():
-            if button.is_pressed and self.velocity != velocity_opposites[new_velocity]:
-                self.velocity = new_velocity
+        while len(self.proposed_velocity_buffer) > 0:
+            proposed_velocity = self.proposed_velocity_buffer.pop(0)
+
+            # don't let player switch from left to right immediately (they would instantly die)
+            if self.actual_velocity != velocity_opposites[proposed_velocity]:
+                self.actual_velocity = proposed_velocity
                 return
 
     def handle_movement(self):
@@ -76,7 +81,7 @@ class Snake(Object):
 
     def handle_collision(self):
         # don't check for collisions if not moving (start of game)
-        if self.velocity == Velocity.NONE:
+        if self.actual_velocity == Velocity.NONE:
             return
 
         [next_x, next_y] = self.next_position()
@@ -103,8 +108,21 @@ class Snake(Object):
                 self.world.spawn_fruit()
                 self.world.score.score += 1
 
+    def handle_proposed_movement(self):
+        pressed_this_tick = []
+        for button, new_velocity in button_to_velocity().items():
+            if button.just_pressed():
+                pressed_this_tick.append((button, new_velocity))
+
+        pressed_this_tick.sort(key=lambda pair: pair[0].event_timestamp)
+        time_sorted_velocities = map(lambda pair: pair[1], pressed_this_tick)
+
+        self.proposed_velocity_buffer.extend(time_sorted_velocities)
+        self.proposed_velocity_buffer = self.proposed_velocity_buffer[:3]  # :3
+
     def step(self):
         if not self.is_dead:
+            self.handle_proposed_movement()
             self.handle_movement()
             self.handle_fruit_collection()
 

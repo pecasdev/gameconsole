@@ -54,7 +54,7 @@ class World(Object):
         Engine.create_object(Fruit(x, y))
 
     def draw_title_screen(self):
-        if self.snake.velocity != Velocity.NONE:
+        if self.snake.actual_velocity != Velocity.NONE:
             self.is_title_screen = False
 
         Engine.screen.draw_text(10, 30, "SNAKE\nBY: PECAS")
