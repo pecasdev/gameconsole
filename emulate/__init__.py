@@ -2,6 +2,7 @@ from typing import Callable
 
 from engine import Engine
 from font import Font
+from font.font_manager import FontManager
 from screen import Screen
 
 from .emulator import Emulator
@@ -18,8 +19,10 @@ def create_emulator(program_main):
     Engine.set_screen(Screen(engine_psa))
 
     # import default fonts
-    Font.import_font("library/font/default_fonts/small.font")
-    Font.set_current_font("small")
+    FontManager.import_font("library/font/default_fonts/small.font")
+    FontManager.import_font("library/font/default_fonts/medium.font")
+    FontManager.import_font("library/font/default_fonts/large.font")
+    FontManager.set_current_font("small")
 
     # run injection setup
     program_main()
