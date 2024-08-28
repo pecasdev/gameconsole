@@ -15,14 +15,27 @@ class Ralph:
             "wait": "wait",
         }
 
-    def __current_sprite(self):
+    def _current_sprite_offset(self):
+        if self.current_sprite_name == "sleep":
+            return [10, 26]
+        elif self.current_sprite_name == "wait":
+            return [10, 8]
+        elif self.current_sprite_name == "go":
+            return [5, 24]
+        elif self.current_sprite_name == "thumb_up":
+            return [10, 28]
+        else:
+            return [0, 0]
+
+    def _current_sprite(self):
         return self.sprites[self.current_sprite_name]
 
     def set_current_sprite_name_from_state(self, state):
         self.current_sprite_name = self.state_to_sprite_name[state]
 
     def draw_sprite(self):
-        self.__current_sprite().blit(0, 0)
+        [sprite_x, sprite_y] = self._current_sprite_offset()
+        self._current_sprite().blit(sprite_x, sprite_y)
 
         if self.current_sprite_name == "sleep":
             Engine.screen.draw_text(5, 5, "press A to play")
