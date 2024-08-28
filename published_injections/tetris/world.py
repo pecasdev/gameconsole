@@ -18,8 +18,8 @@ from .tetromino.tetromino import TETROMINO_THICKNESS, Tetromino, shape_iterate
 class World(Object):
     def __init__(self) -> None:
         super().__init__(0, 0)
-        self.stack: Stack = Engine.create_object(Stack(28, 0))  # type: ignore
-        self.hud: Hud = Engine.create_object(Hud(self))  # type: ignore
+        self.stack = Engine.create_object(Stack(28, 0))
+        self.hud = Engine.create_object(Hud(self))
 
         self.debug_print = create_debug_print_handler()
 
@@ -30,11 +30,11 @@ class World(Object):
 
         self.game_over = False
         self.is_title_screen = True
-        
+
         tetrimino_tile = Sprite.load_from_file("tetromino_tile.sprite")
         tetrimino_tile.load()
         Tetromino.tile_sprite = tetrimino_tile
-    
+
     @staticmethod
     def restart():
         Engine.reset()
@@ -114,9 +114,9 @@ class World(Object):
         if self.stack.is_far_left_occupied():
             self.game_over = True
             # todo - add death logic
-        
+
         if self.game_over and HardwareState.ALPHA.just_pressed():
             World.restart()
-        
+
         if self.is_title_screen and self.active_tetromino.x > 27:
             self.is_title_screen = False

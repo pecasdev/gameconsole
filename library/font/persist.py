@@ -18,7 +18,7 @@ def load(filename: str):
     return font.Font(from_dump["name"], character_sprites)
 
 
-def dump(font, dirname: str):
+def dump(font: "font.Font", dirname: str):
     without_width_and_height = {
         k: v.to_dict()["bitmap"] for k, v in font.character_sprites.items()
     }

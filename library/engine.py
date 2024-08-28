@@ -61,7 +61,7 @@ class Engine:
         Engine.tick_cap = 100
 
     @staticmethod
-    def create_object(obj: Object):
+    def create_object[O: Object](obj: O) -> O:
         Engine.objects.append(obj)
         obj.create()
         return obj

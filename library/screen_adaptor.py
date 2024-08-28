@@ -10,7 +10,7 @@ class ScreenAdaptor:
         raise NotImplementedError
 
     def draw_text(self, x: int, y: int, text: str, font):
-        font.draw_text(x, y, text)
+        font._draw_text(x, y, text)
 
     def new_frame_buffer(self, width: int, height: int):
         raise NotImplementedError

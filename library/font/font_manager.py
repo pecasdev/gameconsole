@@ -27,3 +27,5 @@ class FontManager:
     def import_font(filename: str):
         font = font_persist.load(filename)
         FontManager.known_fonts.append(font)
+
+# todo - add more examples of font setting to published games

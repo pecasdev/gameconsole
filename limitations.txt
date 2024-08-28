@@ -13,6 +13,11 @@ the emulator is currently broken for low tick rates cause it will drop inputs
 if you're not currently holding a key when the next tick happens. should probably
 fix this before you release lol
 
-notes:
+=== notes ===
 connect to VBUS from battery pack
 all modules are powered from VSYS
+
+for memory stuff:
+    import gc
+    gc.mem_free() to see available memory
+    sys.getsizeof() to get memory usage of an object

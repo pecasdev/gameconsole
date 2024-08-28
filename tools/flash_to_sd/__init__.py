@@ -44,7 +44,8 @@ def _determine_injections_to_flash():
 def _determine_current_injections(drive):
     with open(f"{drive}:/GAMELIST") as f:
         current_injections = f.read().splitlines()
-    return current_injections
+        current_injection_names = [item.split(" ")[0] for item in current_injections]
+    return current_injection_names
 
 
 def _generate_diff_output(current_injections, injections_to_flash):
@@ -101,7 +102,7 @@ def _walk_delete_empty_folders(dir):
             pass
 
 
-def _move_file_to_sd(filepath, drive):
+def _move_files_to_sd(filepath, drive):
     destination = f"{drive}:/{filepath}"
 
     # delete if exists
@@ -112,16 +113,27 @@ def _move_file_to_sd(filepath, drive):
     if filepath != "dist/inject":
         filepath = f"dist/published_injections/{filepath}"
 
+    files_copied = 0
+
+    def copy_and_count(src, dst):
+        nonlocal files_copied
+        shutil.copy2(src, dst)
+        files_copied += 1
+
     for attempt in range(1, 6):
         try:
             shutil.copytree(
-                filepath, destination, ignore=shutil.ignore_patterns("*.pyc")
+                filepath,
+                destination,
+                ignore=shutil.ignore_patterns("*.pyc"),
+                copy_function=copy_and_count,
             )
             _walk_delete_empty_folders(destination)
 
             if attempt > 1:
                 print(f"success copying {filepath}, continuing")
-            return
+
+            return files_copied
         except:
             print(f"Error copying {filepath}, attempt {attempt}, retrying")
             time.sleep(0.5)
@@ -131,9 +143,13 @@ def _move_file_to_sd(filepath, drive):
     sys.exit()
 
 
-def _update_gamelist(drive, injections_flashed):
+def _update_gamelist(drive, injection_to_filecount):
+    output = ""
+    for injection, filecount in injection_to_filecount.items():
+        output += f"{injection} {filecount}\n"
+
     with open(f"{drive}:/GAMELIST", "w") as f:
-        f.write("\n".join(injections_flashed))
+        f.write(output)
 
 
 def flash_to_sd():
@@ -149,8 +165,10 @@ def flash_to_sd():
 
     _confirm_user_intent()
 
+    injection_to_filecount = {}
     for injection in injections_to_flash:
-        _move_file_to_sd(injection, drive)
+        files_copied = _move_files_to_sd(injection, drive)
+        injection_to_filecount[injection] = files_copied
 
-    _update_gamelist(drive, injections_to_flash)
+    _update_gamelist(drive, injection_to_filecount)
     print("FLASH COMPLETE")

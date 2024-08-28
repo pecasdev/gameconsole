@@ -6,17 +6,28 @@ from engine import Object
 from util import zfill
 
 
+def _process_choice_line(rawline: str) -> tuple[str, int]:
+    [injection_name, rawcount] = rawline.strip().split(" ")
+    return (injection_name, int(rawcount))
+
 class InjectSelectMenu(Object):
     version = 1
     rows_per_screen = 6
 
     def _read_from_sd_dir(self):
-        choices = []
+        # list of tuple: ("injection_name", "file_count")
+        choices: list[tuple[str, int]] = []
         f = open("/sd/gamelist")
-        choices = [line.strip() for line in f.readlines() if len(line.strip()) != 0]
+        choices = [
+            _process_choice_line(line)
+            for line in f.readlines()
+            if len(line.strip()) != 0
+        ]
         print(choices)
         f.close()
         return choices
+
+
 
     def __init__(self, engine_driver, ssd1306_driver) -> None:
         super().__init__(0, 0)
@@ -86,7 +97,7 @@ class InjectSelectMenu(Object):
         for i, choice_index in enumerate(
             range(min_visible_choice_index, max_visible_choice_index + 1)
         ):
-            text = self.choices[choice_index]
+            text = self.choices[choice_index][0]
 
             if choice_index == self.selection_index:
                 text = ">" + text

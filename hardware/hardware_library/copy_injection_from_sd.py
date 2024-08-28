@@ -1,4 +1,6 @@
 import os
+from typing import Generator
+from sd_copy_progress_bar import draw_sd_copy_progress_bar
 
 
 def rmdir(dir):
@@ -20,7 +22,7 @@ def is_folder(filename):
 COPY_RETRY_COUNT = 3
 
 
-def copy_injection_from_sd(injection_name):
+def copy_injection_from_sd(injection_name, injection_filecount):
     injection_dir = f"/sd/{injection_name}"
 
     try:
@@ -74,16 +76,22 @@ def copy_injection_from_sd(injection_name):
 
         raise RuntimeError(f"Could not copy {from_dir} to {to_dir}")
 
-    # should have slash at start, otherwise empty string
-    def walk_and_copy(subdir):
+    def walk_and_copy(subdir) -> Generator[int]:
         for filename in os.listdir(f"{injection_dir}{subdir}"):
             if is_folder(f"{injection_dir}{subdir}/{filename}"):
                 os.mkdir(f"/inject{subdir}/{filename}")
-                walk_and_copy(f"{subdir}/{filename}")
+                yield from walk_and_copy(f"{subdir}/{filename}")
 
             else:
                 copy_file(f"{subdir}/{filename}")
+                yield 1
+        yield 0
 
     print(f"COPYING INJECTION '{injection_name}' FROM SD")
-    walk_and_copy("")
+    files_copied = 0
+
+    for copied_file_count in walk_and_copy(""):
+        files_copied += copied_file_count
+        draw_sd_copy_progress_bar(files_copied, injection_filecount)
+
     print("DONE COPYING")
