@@ -169,3 +169,4 @@ cython_debug/
 # vscode
 .vscode/
 .VSCodeCounter/
+docs/.obsidian/workspace.json
