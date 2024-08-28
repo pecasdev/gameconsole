@@ -46,7 +46,7 @@ class Screen:
                 self.clear_pixel(left + w, top + h)
 
     def draw_text(self, x: int, y: int, text: str):
-        self.screen_adaptor.draw_text(x, y, text, FontManager.__get_current_font())
+        self.screen_adaptor.draw_text(x, y, text, FontManager._get_current_font())
 
     def kill(self):
         self.screen_adaptor.kill()

@@ -30,7 +30,7 @@ class World(Object):
 
         self.spawn_fruit(self.snake.x + self.snake.thickness * 5, self.snake.y)
 
-    def __random_free_coordinates_within_border(self) -> tuple[int, int]:
+    def _random_free_coordinates_within_border(self) -> tuple[int, int]:
         t = Border.thickness
         x_max = Border.width - t - Fruit.thickness
         y_max = Border.height - t - Fruit.thickness
@@ -47,7 +47,7 @@ class World(Object):
 
     def spawn_fruit(self, x_override: int | None = None, y_override: int | None = None):
         if x_override is None or y_override is None:
-            [x, y] = self.__random_free_coordinates_within_border()
+            [x, y] = self._random_free_coordinates_within_border()
         else:
             [x, y] = [x_override, y_override]
 

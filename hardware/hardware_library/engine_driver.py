@@ -22,7 +22,7 @@ class EngineDriver:
         }
 
         self.button_handlers = [
-            self.__create_hardware_state_handler(name, create_debounce_generator(pin))
+            self._create_hardware_state_handler(name, create_debounce_generator(pin))
             for (name, pin) in button_name_to_hardware_button_pin.items()
         ]
 
@@ -31,7 +31,7 @@ class EngineDriver:
 
         self.running = True
 
-    def __create_hardware_state_handler(self, button_name, debounce_generator):
+    def _create_hardware_state_handler(self, button_name, debounce_generator):
         def handle() -> tuple[str, ButtonState]:
             value = next(debounce_generator)
             button_state = ButtonState(value)
@@ -40,7 +40,7 @@ class EngineDriver:
         return handle
 
     def update_internal_hardware_state(self):
-        state = self.__hardware_state_dict_from_prop()
+        state = self._hardware_state_dict_from_prop()
         new_hardware_state = {
             k: v
             for k, v in state.items()
@@ -55,7 +55,7 @@ class EngineDriver:
         if len(self.internal_hardware_state_queue) > 0:
             Engine.update_hardware_state(self.internal_hardware_state_queue.pop(0))
 
-    def __hardware_state_dict_from_prop(self) -> dict[str, ButtonState]:
+    def _hardware_state_dict_from_prop(self) -> dict[str, ButtonState]:
         return dict([handle() for handle in self.button_handlers])
 
     def runloop(self):

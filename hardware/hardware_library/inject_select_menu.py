@@ -10,7 +10,7 @@ class InjectSelectMenu(Object):
     version = 1
     rows_per_screen = 6
 
-    def __read_from_sd_dir(self):
+    def _read_from_sd_dir(self):
         choices = []
         f = open("/sd/gamelist")
         choices = [line.strip() for line in f.readlines() if len(line.strip()) != 0]
@@ -20,7 +20,7 @@ class InjectSelectMenu(Object):
 
     def __init__(self, engine_driver, ssd1306_driver) -> None:
         super().__init__(0, 0)
-        self.choices = self.__read_from_sd_dir()
+        self.choices = self._read_from_sd_dir()
         self.choice_count = len(self.choices)
         self.selection_index = 0
         self.engine_driver = engine_driver

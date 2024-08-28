@@ -23,4 +23,3 @@ Read the **ENTIRE** documentation from start to finish (no skimming!), there's n
 	- Alarm
 - Tools
 - Limitations
-

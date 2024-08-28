@@ -83,7 +83,7 @@ class Engine:
         hardware_state.HardwareState.update_from_dict(hardware_state_dict)
 
     @staticmethod
-    def __tick_sleep(start, end):
+    def _tick_sleep(start, end):
         if Engine.emulator_tick_override:
             Engine.clock.tick(Engine.tick_cap)
 
@@ -94,7 +94,7 @@ class Engine:
                 time.sleep(surplus_time / 1000)
 
     @staticmethod
-    def __process_alarms():
+    def _process_alarms():
         to_remove = []
         for alarm in Engine.alarms:
             if alarm.handle():
@@ -104,7 +104,7 @@ class Engine:
             Engine.alarms.remove(alarm)
 
     @staticmethod
-    def __process_objects():
+    def _process_objects():
         for obj in Engine.objects:
             obj.prestep()
 
@@ -121,8 +121,8 @@ class Engine:
     @staticmethod
     def tick():
         tick_started = now()
-        Engine.__process_alarms()
-        Engine.__process_objects()
+        Engine._process_alarms()
+        Engine._process_objects()
         tick_ended = now()
 
-        Engine.__tick_sleep(tick_started, tick_ended)
+        Engine._tick_sleep(tick_started, tick_ended)

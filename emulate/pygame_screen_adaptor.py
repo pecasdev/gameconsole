@@ -32,7 +32,7 @@ class PygameScreenAdaptor(ScreenAdaptor):
         self.display.set_at((x, y), pygame.Color("black"))
 
     def draw_text(self, x: int, y: int, text: str, font: Font):
-        font.__draw_text(x, y, text)
+        font._draw_text(x, y, text)
 
     def flush(self):
         self.pygame_driver.blit(self.display, (0, 0))

@@ -1,5 +1,5 @@
 ### Overview
-If a function name has leading underscores (eg. `__draw_character` as opposed to `draw_character`), you probably shouldn't be calling it unless you know what you're doing. 
+If a function name has a leading underscore (eg. `_draw_character` as opposed to `draw_character`), you probably shouldn't be calling it unless you know what you're doing. 
 ### Screen
 ### Engine + Object
 ### Hardware State

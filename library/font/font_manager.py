@@ -12,14 +12,15 @@ class FontManager:
             current_font = next(
                 filter(lambda f: f.name == name, FontManager.known_fonts)
             )
-            current_font.__load()
-        except:
+            current_font._load()
+        except Exception as e:
+            print(e)
             raise RuntimeError(f"Font {name} is not known")
 
         FontManager.font_selection_index = FontManager.known_fonts.index(current_font)
 
     @staticmethod
-    def __get_current_font():
+    def _get_current_font():
         return FontManager.known_fonts[FontManager.font_selection_index]
 
     @staticmethod

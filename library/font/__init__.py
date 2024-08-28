@@ -16,21 +16,21 @@ class Font:
         self.char_w = character_sprites["A"].width
         self.char_h = character_sprites["A"].height
 
-    def __load(self):
+    def _load(self):
         for sprite in self.character_sprites.values():
             sprite.load()
 
-    def __draw_text(self, x: int, y: int, text: str):
+    def _draw_text(self, x: int, y: int, text: str):
         lines = text.split("\n")
         for y_offset, line in enumerate(lines):
             for x_offset, char in enumerate(line):
-                self.__draw_character(
+                self._draw_character(
                     x + x_offset * (self.char_w + 1),
                     y + y_offset * (self.char_h + 2),
                     char,
                 )
 
-    def __draw_character(self, x: int, y: int, character: str):
+    def _draw_character(self, x: int, y: int, character: str):
         if character == " ":
             return
 

@@ -26,12 +26,12 @@ class Emulator:
         self.hardware_prop = HardwareProp(0, 0)
 
         self.button_handlers: list[Callable[[], tuple[str, ButtonState]]] = [
-            self.__create_button_state_handler("LEFT", Keybind.LEFT),
-            self.__create_button_state_handler("RIGHT", Keybind.RIGHT),
-            self.__create_button_state_handler("UP", Keybind.UP),
-            self.__create_button_state_handler("DOWN", Keybind.DOWN),
-            self.__create_button_state_handler("ALPHA", Keybind.ALPHA),
-            self.__create_button_state_handler("BETA", Keybind.BETA),
+            self._create_button_state_handler("LEFT", Keybind.LEFT),
+            self._create_button_state_handler("RIGHT", Keybind.RIGHT),
+            self._create_button_state_handler("UP", Keybind.UP),
+            self._create_button_state_handler("DOWN", Keybind.DOWN),
+            self._create_button_state_handler("ALPHA", Keybind.ALPHA),
+            self._create_button_state_handler("BETA", Keybind.BETA),
         ]
 
         self.internal_hardware_state = HardwareState.as_dict()
@@ -50,7 +50,7 @@ class Emulator:
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def __create_button_state_handler(
+    def _create_button_state_handler(
         self, button_name: str, key: int
     ) -> Callable[[], tuple[str, ButtonState]]:
         def handle() -> tuple[str, ButtonState]:
@@ -64,15 +64,15 @@ class Emulator:
         return handle
 
     def update_internal_hardware_state(self):
-        self.internal_hardware_state = self.__hardware_state_dict_from_prop()
+        self.internal_hardware_state = self._hardware_state_dict_from_prop()
 
     def update_engine_hardware_state(self):
         Engine.update_hardware_state(self.internal_hardware_state)
 
-    def __hardware_state_dict_from_prop(self) -> dict[str, ButtonState]:
+    def _hardware_state_dict_from_prop(self) -> dict[str, ButtonState]:
         return dict([handle() for handle in self.button_handlers])
 
-    def __render_pygame_stuff(self):
+    def _render_pygame_stuff(self):
         # init drawlayer
         drawlayer = self.pygame_driver.copy_surface()
 
@@ -97,7 +97,7 @@ class Emulator:
                 self.update_engine_hardware_state()
 
                 Engine.tick()
-                self.__render_pygame_stuff()
+                self._render_pygame_stuff()
 
                 HardwareState.ack_button_states()
 
