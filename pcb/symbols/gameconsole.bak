@@ -1553,6 +1553,14 @@
 			)
 		)
 		(symbol "sdcard_1_1"
+			(text "SDCARD"
+				(at 21 -2 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
 			(pin input line
 				(at 4 40 90)
 				(length 2.54)
