@@ -1,7 +1,9 @@
 inject/
 
-hardware/pcb/gerber/
-hardware/pcb/gameconsole-backups/
+pcb/gerber/
+pcb/gameconsole-backups/
+case/*.blend1
+case/*.stl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -170,3 +172,4 @@ cython_debug/
 .vscode/
 .VSCodeCounter/
 docs/.obsidian/workspace.json
+
