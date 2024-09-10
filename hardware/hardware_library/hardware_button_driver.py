@@ -7,14 +7,13 @@ from now import now
 
 class HardwareButtonPin:
     # general purpose pins
+    BETA = Pin(16, Pin.IN, Pin.PULL_DOWN)
+    ALPHA = Pin(17, Pin.IN, Pin.PULL_DOWN)
 
-    ALPHA = Pin(15, Pin.IN, Pin.PULL_DOWN)
-    BETA = Pin(14, Pin.IN, Pin.PULL_DOWN)
-
-    LEFT = Pin(13, Pin.IN, Pin.PULL_DOWN)
-    DOWN = Pin(12, Pin.IN, Pin.PULL_DOWN)
-    RIGHT = Pin(11, Pin.IN, Pin.PULL_DOWN)
-    UP = Pin(10, Pin.IN, Pin.PULL_DOWN)
+    UP = Pin(18, Pin.IN, Pin.PULL_DOWN)
+    RIGHT = Pin(19, Pin.IN, Pin.PULL_DOWN)
+    DOWN = Pin(20, Pin.IN, Pin.PULL_DOWN)
+    LEFT = Pin(21, Pin.IN, Pin.PULL_DOWN)
 
 
 DEBOUNCE_POLL_COUNT = 1

@@ -6,8 +6,9 @@ from engine import Engine
 
 def mount_sd():
     try:
-        spi = SPI(0, baudrate=40000000, sck=Pin(6), mosi=Pin(7), miso=Pin(4))
-        sd = sdcard.SDCard(spi, Pin(5))
+        spi = SPI(1, baudrate=40000000, sck=Pin(10), mosi=Pin(11), miso=Pin(12))
+        cs = Pin(13)
+        sd = sdcard.SDCard(spi, cs)
         os.mount(sd, "/sd")
     except Exception as e:
         print(e)

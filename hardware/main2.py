@@ -20,7 +20,7 @@ from loadscreen import draw_loadscreen
 
 
 
-ssd1306_driver = ssd1306.SSD1306_I2C(128, 64, I2C(1, scl=Pin(3), sda=Pin(2)))
+ssd1306_driver = ssd1306.SSD1306_I2C(128, 64, I2C(1, scl=Pin(15), sda=Pin(14)))
 screen_adaptor = OledScreenAdaptor(ssd1306_driver)
 screen = Screen(screen_adaptor)
 Engine.set_screen(screen)
